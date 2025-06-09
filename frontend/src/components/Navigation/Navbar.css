@@ -1,0 +1,122 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: rgba(18, 18, 18, 0.98);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-md);
+}
+
+.navbar-logo h1 {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(45deg, var(--color-accent), #B784F3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: var(--spacing-lg);
+}
+
+.menu-item {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+  font-size: 16px;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  color: var(--color-text-primary);
+}
+
+.navbar-search {
+  flex: 0 1 400px;
+  position: relative;
+  margin: 0 var(--spacing-xl);
+}
+
+.navbar-search input {
+  width: 100%;
+  padding: 10px 40px 10px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: 14px;
+}
+
+.navbar-search input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.navbar-search input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.search-button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.search-button:hover {
+  color: var(--color-text-primary);
+}
+
+.navbar-auth {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.login-button {
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.login-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.register-button {
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+  .navbar-search {
+    display: none;
+  }
+  
+  .navbar-menu {
+    gap: var(--spacing-md);
+  }
+  
+  .menu-item {
+    font-size: 14px;
+  }
+} 
