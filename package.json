@@ -1,0 +1,20 @@
+{
+  "name": "harmonyhub",
+  "version": "1.0.0",
+  "description": "HarmonyHub to nowoczesna aplikacja streamingowa umożliwiająca odtwarzanie muzyki, tworzenie i zarządzanie playlistami oraz budowanie społeczności muzycznych. Użytkownicy mogą nie tylko słuchać swoich ulubionych utworów, ale również łączyć się ze znajomymi, wspólnie tworzyć i edytować playlisty oraz dzielić się rekomendacjami muzycznymi.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KrHaXon/HarmonyHub.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KrHaXon/HarmonyHub/issues"
+  },
+  "homepage": "https://github.com/KrHaXon/HarmonyHub#readme"
+}
