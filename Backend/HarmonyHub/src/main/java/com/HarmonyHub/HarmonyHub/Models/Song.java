@@ -15,8 +15,15 @@ import lombok.Setter;
 public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
-    private String title;
-    private String artist;
+    private String Title;
+
+    private String Artist;
+
+    private String Album;
+
+    private float Duration;
+
+    private String URL;
 }
