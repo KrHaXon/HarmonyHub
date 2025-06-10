@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const location = useLocation();
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         {/* Logo */}
         <div className="navbar-logo">
-          <h1>HarmonyHub</h1>
+          <Link to="/">
+            <h1>HarmonyHub</h1>
+          </Link>
         </div>
 
         {/* Main Menu */}
         <div className="navbar-menu">
-          <a href="/" className="menu-item active">Home</a>
-          <a href="/browse" className="menu-item">Browse</a>
-          <a href="/library" className="menu-item">Library</a>
+          <Link to="/" className={`menu-item ${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
+          <Link to="/browse" className={`menu-item ${location.pathname === '/browse' ? 'active' : ''}`}>Browse</Link>
+          <Link to="/library" className={`menu-item ${location.pathname === '/library' ? 'active' : ''}`}>Library</Link>
         </div>
 
         {/* Search Bar */}
@@ -36,8 +40,8 @@ const Navbar = () => {
 
         {/* Auth Buttons */}
         <div className="navbar-auth">
-          <button className="button login-button">Log In</button>
-          <button className="button button-primary register-button">Sign Up</button>
+          <Link to="/login" className="button login-button">Log In</Link>
+          <Link to="/register" className="button button-primary register-button">Sign Up</Link>
         </div>
       </div>
     </nav>

@@ -20,6 +20,15 @@
   padding: 0 var(--spacing-md);
 }
 
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo a {
+  text-decoration: none;
+}
+
 .navbar-logo h1 {
   font-size: 24px;
   font-weight: 700;
@@ -92,6 +101,18 @@
   gap: var(--spacing-sm);
 }
 
+.navbar-auth .button {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
 .login-button {
   background: transparent;
   color: var(--color-text-primary);
@@ -103,20 +124,40 @@
 }
 
 .register-button {
-  padding-left: var(--spacing-lg);
-  padding-right: var(--spacing-lg);
+  background-color: var(--color-accent);
+  color: var(--color-text-primary);
+  border: none;
 }
 
+.register-button:hover {
+  background-color: #8560c8;
+  transform: translateY(-1px);
+}
+
+/* Auth navbar specific styles */
+.auth-navbar {
+  background: var(--color-background-primary);
+}
+
+.auth-navbar .navbar-container {
+  padding: 0 var(--spacing-md);
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
   .navbar-search {
     display: none;
   }
   
   .navbar-menu {
-    gap: var(--spacing-md);
+    display: none;
   }
   
-  .menu-item {
-    font-size: 14px;
+  .navbar-container {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .auth-navbar .navbar-container {
+    padding: 0 var(--spacing-sm);
   }
 } 
