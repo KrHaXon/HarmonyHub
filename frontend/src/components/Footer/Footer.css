@@ -17,6 +17,7 @@
   font-weight: 700;
   margin-bottom: var(--spacing-lg);
   color: var(--color-text-primary);
+  padding-bottom: var(--spacing-xl);
 }
 
 .footer-section h4 {

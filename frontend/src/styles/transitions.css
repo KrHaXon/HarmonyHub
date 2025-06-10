@@ -1,0 +1,33 @@
+/* Page Transition Styles */
+.app {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.page-transition {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  will-change: transform, opacity;
+}
+
+/* Ensure proper stacking during transitions */
+.page-transition[data-motion="animate"] {
+  z-index: 1;
+}
+
+.page-transition[data-motion="exit"] {
+  z-index: 0;
+}
+
+/* Reduce motion if user prefers */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+} 
