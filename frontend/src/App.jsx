@@ -11,6 +11,7 @@ import Register from './components/auth/Register';
 import PageTransition from './components/PageTransition';
 import './styles/globals.css';
 import './styles/transitions.css';
+import Profile from './sites/Profile';
 
 function App() {
   const location = useLocation();
@@ -46,6 +47,14 @@ function App() {
                   <MainContent />
                   <Footer />
                 </>
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PageTransition>
+                <Profile />
               </PageTransition>
             }
           />

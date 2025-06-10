@@ -42,17 +42,31 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setIsLoading(true);
     try {
-      // TODO: Implement actual login logic here
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated API call
-      console.log('Login successful', formData);
+      const response = await fetch('http://localhost:8080/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json(); // oczekujemy { token: '...' }
+        localStorage.setItem('token', data.token);
+        alert('Login successful!');
+        window.location.href = '/'; // przekierowanie do np. dashboardu
+      } else {
+        const errorData = await response.json();
+        setErrors({ submit: errorData.message || 'Login failed. Please try again.' });
+      }
     } catch (error) {
-      console.error('Login failed:', error);
-      setErrors({ submit: 'Login failed. Please try again.' });
+      setErrors({ submit: 'An error occurred. Please try again later.' });
     } finally {
       setIsLoading(false);
     }

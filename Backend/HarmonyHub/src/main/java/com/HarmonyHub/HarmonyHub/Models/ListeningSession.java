@@ -14,14 +14,14 @@ import java.time.LocalDateTime;
 public class ListeningSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     @ManyToOne
-    private User User;
+    private User user;
 
     @ManyToOne
-    private Song Song;
+    private Song song;
 
-    private LocalDateTime Timestamp;
+    private LocalDateTime timestamp;
 
     @Transient
     private Thread streamingThread;

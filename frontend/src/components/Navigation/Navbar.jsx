@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+  }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+    navigate('/login');
+  };
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -40,8 +52,17 @@ const Navbar = () => {
 
         {/* Auth Buttons */}
         <div className="navbar-auth">
-          <Link to="/login" className="button login-button">Log In</Link>
-          <Link to="/register" className="button button-primary register-button">Sign Up</Link>
+          {!isAuthenticated ? (
+            <>
+              <Link to="/login" className="button login-button">Log In</Link>
+              <Link to="/register" className="button button-primary register-button">Sign Up</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/profile" className="button profile-button">My Profile</Link>
+              <button className="button logout-button" onClick={handleLogout}>Logout</button>
+            </>
+          )}
         </div>
       </div>
     </nav>

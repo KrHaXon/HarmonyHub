@@ -9,22 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-@Getter
-@Setter
 @Entity
+@Table(name = "app_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
-    private String Username;
+    private String userName;
 
-    private String Email;
+    private String email;
 
-    private String Password;
+    private String password;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Playlist> Playlists = new ArrayList<>();
+    private List<Playlist> playlists = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -32,5 +31,29 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
-    private List<User> Friends = new ArrayList<>();
+    private List<User> friends = new ArrayList<>();
+
+    public String getUsername() {
+        return userName;
+    }
+
+    public void setUsername(String username) {
+        this.userName = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

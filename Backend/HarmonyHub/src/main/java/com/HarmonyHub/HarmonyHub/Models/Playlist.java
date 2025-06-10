@@ -18,9 +18,9 @@ import jakarta.persistence.*;
 public class Playlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
-    private String Name;
+    private String name;
 
     @ManyToMany
     @JoinTable(
@@ -28,10 +28,10 @@ public class Playlist {
             joinColumns = @JoinColumn(name = "playlist_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id")
     )
-    private List<Song> Songs = new ArrayList<>();
+    private List<Song> songs = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private User Owner;
+    private User owner;
 
 }
