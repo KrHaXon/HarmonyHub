@@ -79,4 +79,46 @@
   .horizontal-scroll .playlist-card {
     flex: 0 0 150px;
   }
+}
+
+.login-prompt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding: var(--spacing-lg) 0;
+}
+
+.login-prompt-card {
+  background: none;
+  border-radius: var(--radius-md);
+  box-shadow: none;
+  padding: 1.5rem 1rem;
+  max-width: 420px;
+  text-align: center;
+  border: none;
+}
+
+.login-prompt-card h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+}
+
+.login-prompt-card p {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.login-link {
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.login-link:hover {
+  color: #8560c8;
 } 
