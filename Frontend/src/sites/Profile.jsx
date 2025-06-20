@@ -54,32 +54,54 @@ const Profile = () => {
           src={user.profileImageUrl}
           alt="Avatar"
           className="profile-avatar"
+          />
+          <div className="profile-info">
+    {isEditing ? (
+      <form
+        className="edit-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSave();
+        }}
+      >
+        <input
+          type="text"
+          value={user.userName}
+          onChange={(e) => setUser({ ...user, userName: e.target.value })}
+          placeholder="Username"
         />
-        <div className="profile-info">
-          {isEditing ? (
-            <div className="edit-form">
-              <input
-                type="text"
-                value={user.userName}
-                onChange={(e) => setUser({ ...user, userName: e.target.value })}
-                placeholder="Username"
-              />
-              <input
-                type="email"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-                placeholder="Email"
-              />
-              <button onClick={handleSave}>Zapisz</button>
-              <button onClick={() => setIsEditing(false)}>Anuluj</button>
-            </div>
-          ) : (
-            <>
-              <h2>{user.userName}</h2>
-              <p>{user.email}</p>
-            </>
-          )}
+        <input
+          type="email"
+          value={user.email}
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
+          placeholder="Email"
+        />
+        <input
+          type="text"
+          value={user.profileImageUrl || ''}
+          onChange={(e) => setUser({ ...user, profileImageUrl: e.target.value })}
+          placeholder="Adres URL zdjęcia profilowego"
+        />
+        <div className="button-group">
+          <button type="submit" className="save-button">
+            Zapisz
+          </button>
+          <button
+            type="button"
+            className="cancel-button"
+            onClick={() => setIsEditing(false)}
+          >
+            Anuluj
+          </button>
         </div>
+      </form>
+    ) : (
+      <>
+        <h2>{user.userName}</h2>
+        <p>{user.email}</p>
+      </>
+    )}
+  </div>
       </div>
 
       <div className="profile-buttons">
