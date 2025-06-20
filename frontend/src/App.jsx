@@ -70,6 +70,7 @@ function App() {
                 </PageTransition>
               }
             />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </AnimatePresence>
         <PlayerBar />

@@ -1,5 +1,8 @@
 package com.HarmonyHub.HarmonyHub.Controllers;
 
+import com.HarmonyHub.HarmonyHub.Models.DTO.PlaylistDTO;
+import com.HarmonyHub.HarmonyHub.Models.DTO.SongDTO;
+import com.HarmonyHub.HarmonyHub.Models.DTO.UserDTO;
 import com.HarmonyHub.HarmonyHub.Models.User;
 import com.HarmonyHub.HarmonyHub.Repository.UserRepository;
 import com.HarmonyHub.HarmonyHub.Services.IMPL.JwtService;
@@ -8,8 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -44,5 +50,33 @@ public class AuthController {
                 })
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(Map.of("message", "Invalid credentials")));
+    }
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> getCurrentUser(@RequestHeader("Authorization") String token) {
+        String email = jwtService.extractUsername(token.replace("Bearer ", ""));
+        return userRepository.findByEmail(email)
+                .map(user -> {
+                    List<PlaylistDTO> playlistDTOs = user.getPlaylists().stream()
+                            .map(playlist -> new PlaylistDTO(
+                                    playlist.getId(),
+                                    playlist.getTitle(),
+                                    playlist.getDescription(),
+                                    playlist.getCoverImage(),
+                                    playlist.getSongs().stream()
+                                            .map(SongDTO::new)
+                                            .toList()
+                            ))
+                            .toList();
+
+                    UserDTO userDTO = new UserDTO(
+                            user.getId(),
+                            user.getUserName(),
+                            user.getEmail(),
+                            user.getProfileImageUrl(),
+                            playlistDTOs
+                    );
+                    return ResponseEntity.ok(userDTO);
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token"));
     }
 }

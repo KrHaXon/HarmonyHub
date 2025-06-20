@@ -33,11 +33,13 @@ public class User {
     )
     private List<User> friends = new ArrayList<>();
 
-    public String getUsername() {
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
+    public String getUserName() {
         return userName;
     }
 
-    public void setUsername(String username) {
+    public void setUserName(String username) {
         this.userName = username;
     }
 
@@ -55,5 +57,19 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public List<Playlist> getPlaylists() {
+        return this.playlists;
+    }
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
