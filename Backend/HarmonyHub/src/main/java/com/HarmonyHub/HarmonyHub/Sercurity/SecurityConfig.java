@@ -24,7 +24,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/api/playlists/**", "/api/songs/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/playlists/**", "/api/songs/**" , "/api/authors/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
