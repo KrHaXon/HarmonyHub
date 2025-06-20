@@ -12,55 +12,69 @@ import PageTransition from './components/PageTransition';
 import './styles/globals.css';
 import './styles/transitions.css';
 import Profile from './sites/Profile';
+import PlaylistDetails from './sites/PlaylistDetails';
+import { PlayerProvider } from './context/PlayerContext';
+import PlayerBar from './components/PlayerBar';
 
 function App() {
   const location = useLocation();
   const isAuthPage = ['/login', '/register'].includes(location.pathname);
 
   return (
-    <div className="app">
-      {isAuthPage ? <AuthNavbar /> : <Navbar />}
-      <AnimatePresence mode="wait" initial={false}>
-        <Routes location={location} key={location.pathname}>
-          <Route
-            path="/login"
-            element={
-              <PageTransition>
-                <Login />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <PageTransition>
-                <Register />
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <PageTransition>
-                <>
-                  <Hero />
-                  <MainContent />
-                  <Footer />
-                </>
-              </PageTransition>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <PageTransition>
-                <Profile />
-              </PageTransition>
-            }
-          />
-        </Routes>
-      </AnimatePresence>
-    </div>
+    <PlayerProvider>
+      <div className="app">
+        {isAuthPage ? <AuthNavbar /> : <Navbar />}
+        <AnimatePresence mode="wait" initial={false}>
+          <Routes location={location} key={location.pathname}>
+            <Route
+              path="/login"
+              element={
+                <PageTransition>
+                  <Login />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <PageTransition>
+                  <Register />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <PageTransition>
+                  <>
+                    <Hero />
+                    <MainContent />
+                    <Footer />
+                  </>
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <PageTransition>
+                  <Profile />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/playlist/:id"
+              element={
+                <PageTransition>
+                  <PlaylistDetails />
+                </PageTransition>
+              }
+            />
+          </Routes>
+        </AnimatePresence>
+        <PlayerBar />
+      </div>
+    </PlayerProvider>
   );
 }
 

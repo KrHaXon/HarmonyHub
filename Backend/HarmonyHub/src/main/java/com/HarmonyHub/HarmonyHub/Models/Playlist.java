@@ -20,7 +20,10 @@ public class Playlist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
+    private String description;
+    @Column(name = "cover_image")
+    private String coverImage;
 
     @ManyToMany
     @JoinTable(
@@ -34,4 +37,7 @@ public class Playlist {
     @JoinColumn(name = "owner_id")
     private User owner;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
