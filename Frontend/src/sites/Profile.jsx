@@ -50,7 +50,7 @@ const Profile = () => {
       alert("Wystąpił błąd podczas zapisywania.");
     }
   };
-
+//co
   if (!user) return <div>Loading...</div>;
 
   return (
