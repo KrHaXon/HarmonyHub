@@ -30,7 +30,6 @@
 
 .profile-info p {
   font-size: 1.2rem;
-  color: #666;
 }
 
 .playlist-grid {
@@ -119,4 +118,18 @@
   gap: 1rem;
   width: 100%;
   justify-content: center;
+}
+.followers-following {
+  display: flex;
+  gap: 2rem;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+.email-info
+{
+  font-size: 1.2rem;
+  color: #666;
 }

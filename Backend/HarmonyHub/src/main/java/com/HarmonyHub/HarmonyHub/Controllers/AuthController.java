@@ -45,7 +45,7 @@ public class AuthController {
         return userRepository.findByEmail(loginUser.getEmail())
                 .filter(user -> passwordEncoder.matches(loginUser.getPassword(), user.getPassword()))
                 .map(user -> {
-                    String token = jwtService.generateToken(user.getEmail());
+                    String token = jwtService.generateToken(user.getId(), user.getEmail());
                     return ResponseEntity.ok().body(Map.of("token", token));
                 })
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -75,6 +75,8 @@ public class AuthController {
                             user.getProfileImageUrl(),
                             playlistDTOs
                     );
+                    userDTO.setFollowersCount(user.getFollowers().size());
+                    userDTO.setFollowingCount(user.getFollowing().size());
                     return ResponseEntity.ok(userDTO);
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token"));

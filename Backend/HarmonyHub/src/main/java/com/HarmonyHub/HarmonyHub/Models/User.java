@@ -27,11 +27,14 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-            name = "user_friends",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
+            name = "user_followers",
+            joinColumns = @JoinColumn(name = "following_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
-    private List<User> friends = new ArrayList<>();
+    private List<User> followers = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "followers")
+    private List<User> following = new ArrayList<>();
 
     @Column(name = "profile_image_url")
     private String profileImageUrl;
@@ -71,5 +74,13 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public List<User> getFollowers() {
+        return followers;
+    }
+
+    public List<User> getFollowing() {
+        return following;
     }
 }

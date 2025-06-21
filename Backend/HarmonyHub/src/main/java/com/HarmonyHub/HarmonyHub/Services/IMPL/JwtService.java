@@ -16,8 +16,9 @@ public class JwtService {
     private static final String SECRET_KEY = "HEHEHEHEHHEHEHEANFISUANFfsfsodfmsifmsoifmsiofmsoiamfsaio";
     private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 10;
 
-    public String generateToken(String usernameOrEmail) {
+    public String generateToken(Long userId, String usernameOrEmail) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", userId);
         return createToken(claims, usernameOrEmail);
     }
 
@@ -59,5 +60,16 @@ public class JwtService {
 
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
+    }
+    public Long extractUserId(String token) {
+        Claims claims = extractAllClaims(token.startsWith("Bearer ") ? token.substring(7) : token);
+        Object userIdObj = claims.get("userId");
+        if (userIdObj instanceof Integer) {
+            return ((Integer) userIdObj).longValue();
+        } else if (userIdObj instanceof Long) {
+            return (Long) userIdObj;
+        } else {
+            throw new RuntimeException("Nieprawidłowy userId w tokenie");
+        }
     }
 }
