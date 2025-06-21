@@ -15,6 +15,7 @@ import Profile from './sites/Profile';
 import PlaylistDetails from './sites/PlaylistDetails';
 import { PlayerProvider } from './context/PlayerContext';
 import PlayerBar from './components/PlayerBar';
+import Author from './components/Author/Author';
 
 function App() {
   const location = useLocation();
@@ -70,7 +71,17 @@ function App() {
                 </PageTransition>
               }
             />
+                < model_author
+             <Route
+              path="/author/:id"
+              element={
+                <PageTransition>
+                  <Author />
+                </PageTransition>
+              }
+            />
             <Route path="/profile" element={<Profile />} />
+
           </Routes>
         </AnimatePresence>
         <PlayerBar />

@@ -18,7 +18,9 @@ public class Song {
     private Long id;
 
     private String title;
-    private String artist;
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = true)
+    private Author author;
     private int duration; // sekundy
     private String cover;
     private String audioUrl; // link do pliku audio
@@ -26,6 +28,8 @@ public class Song {
     @ManyToMany(mappedBy = "songs")
     @JsonIgnore
     private Set<Playlist> playlists;
+
+
 
     public void setId(Long id) {
         this.id = id;

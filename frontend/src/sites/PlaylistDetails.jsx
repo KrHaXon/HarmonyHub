@@ -42,26 +42,27 @@ const PlaylistDetails = () => {
   }, []);
 
   const filteredSongs = useMemo(() => {
-    if (!playlist || !playlist.songs) return [];
-    let songs = playlist.songs.filter(song =>
-      song.title.toLowerCase().includes(search.toLowerCase()) ||
-      song.artist.toLowerCase().includes(search.toLowerCase())
-    );
-    switch (sort) {
-      case 'title':
-        songs = songs.sort((a, b) => a.title.localeCompare(b.title));
-        break;
-      case 'artist':
-        songs = songs.sort((a, b) => a.artist.localeCompare(b.artist));
-        break;
-      case 'duration':
-        songs = songs.sort((a, b) => a.duration - b.duration);
-        break;
-      default:
-        break;
-    }
-    return songs;
-  }, [search, sort, playlist]);
+  if (!playlist || !playlist.songs) return [];
+  let songs = playlist.songs.filter(song =>
+    song.title?.toLowerCase().includes(search.toLowerCase()) ||
+    song.author?.stageName?.toLowerCase().includes(search.toLowerCase())
+  );
+  switch (sort) {
+    case 'title':
+      songs = songs.sort((a, b) => a.title.localeCompare(b.title));
+      break;
+    case 'authors':
+      songs = songs.sort((a, b) => a.author?.stageName.localeCompare(b.author?.stageName));
+      break;
+    case 'duration':
+      songs = songs.sort((a, b) => a.duration - b.duration);
+      break;
+    default:
+      break;
+  }
+  return songs;
+}, [search, sort, playlist]);
+
 
   const totalDuration = playlist && playlist.songs ? playlist.songs.reduce((acc, song) => acc + song.duration, 0) : 0;
 

@@ -20,7 +20,7 @@ const SongRow = ({ song, index, songs, songIdx }) => {
       </div>
       <div className="song-info">
         <div className="song-title">{song.title}</div>
-        <div className="song-artist">{song.artist}</div>
+        <div className="song-artist">{song.author.stageName}</div>
       </div>
       <div className="song-duration">{formatDuration(song.duration)}</div>
       <button className="song-play button button-primary" title="Odtwórz" onClick={() => playQueue(songs, songIdx)}>
