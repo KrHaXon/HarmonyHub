@@ -71,7 +71,7 @@ function App() {
                 </PageTransition>
               }
             />
-                < model_author
+               
              <Route
               path="/author/:id"
               element={
