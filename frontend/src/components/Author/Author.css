@@ -1,0 +1,90 @@
+.author-page {
+  padding-top: var(--spacing-xl);
+  padding-bottom: var(--spacing-xl);
+  margin-top: 80px;
+  margin-bottom: 100px;
+}
+
+.author-header {
+  display: flex;
+  gap: var(--spacing-xl);
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.author-profile {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
+
+.author-profile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.author-meta {
+  flex: 1;
+}
+
+.author-name {
+  font-size: 42px;
+  font-weight: 900;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+}
+
+.author-realname,
+.author-country,
+.author-bio {
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--color-text-secondary);
+  font-size: 16px;
+}
+
+.author-songs {
+  background: var(--color-background-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  box-shadow: 0 4px 6px rgba(147, 112, 219, 0.07);
+}
+
+.no-songs {
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: var(--spacing-lg);
+  font-size: 18px;
+}
+
+@media (max-width: 900px) {
+  .author-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+  }
+
+  .author-profile {
+    width: 180px;
+    height: 180px;
+  }
+
+  .author-name {
+    font-size: 28px;
+  }
+
+  .author-bio {
+    font-size: 14px;
+  }
+}

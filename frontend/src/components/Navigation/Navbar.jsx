@@ -131,7 +131,7 @@ const filteredSongs = songs.filter(
                   Authors
                 </div>
                 {filteredAuthors.map((author) => (
-                  <div key={"author-" + author.id} className="search-result-item" role="listitem" tabIndex={0}>
+                  <div key={"author-" + author.id} className="search-result-item" role="listitem" tabIndex={0} onClick={() => { setSearchQuery(''); navigate(`/author/${author.id}`);}}>
                     {author.profileImageUrl && <img src={author.profileImageUrl} alt={author.stageName} />}
                     <div className="search-result-info">
                       <div className="search-result-title">{author.stageName}</div>
