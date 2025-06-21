@@ -1,12 +1,12 @@
 package com.HarmonyHub.HarmonyHub.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -15,15 +15,23 @@ import lombok.Setter;
 public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
-    private String Title;
+    private String title;
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = true)
+    private Author author;
+    private int duration; // sekundy
+    private String cover;
+    private String audioUrl; // link do pliku audio
 
-    private String Artist;
+    @ManyToMany(mappedBy = "songs")
+    @JsonIgnore
+    private Set<Playlist> playlists;
 
-    private String Album;
 
-    private float Duration;
 
-    private String URL;
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

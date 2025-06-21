@@ -13,18 +13,18 @@ import java.util.List;
 public class FriendRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @ManyToOne
-    private User FromUser;
+    private User fromUser;
 
     @ManyToOne
-    private User ToUser;
+    private User toUser;
 
     @Enumerated(EnumType.STRING)
-    private Statuses Status = Statuses.PENDING;
+    private Status status = Status.PENDING;
 
-    public enum Statuses {
+    public enum Status {
         PENDING, ACCEPTED, REJECTED
     }
 
