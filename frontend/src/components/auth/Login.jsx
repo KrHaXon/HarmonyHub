@@ -4,6 +4,7 @@ import '../../styles/auth.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({
+    userName: '', // jeśli chcesz logować po nazwie użytkownika
     email: '',
     password: '',
     rememberMe: false
@@ -17,7 +18,6 @@ const Login = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -31,7 +31,7 @@ const Login = () => {
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email';
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required';
     }
@@ -57,10 +57,11 @@ const Login = () => {
       });
 
       if (response.ok) {
-        const data = await response.json(); // oczekujemy { token: '...' }
+        const data = await response.json(); 
+        console.log("RECEIVED TOKEN FROM BACKEND:", data.token); 
         localStorage.setItem('token', data.token);
         alert('Login successful!');
-        window.location.href = '/'; // przekierowanie do np. dashboardu
+        window.location.href = '/'; 
       } else {
         const errorData = await response.json();
         setErrors({ submit: errorData.message || 'Login failed. Please try again.' });
@@ -76,7 +77,24 @@ const Login = () => {
     <div className="auth-container">
       <form className="auth-form" onSubmit={handleSubmit}>
         <h1 className="auth-title">Welcome Back</h1>
-        
+
+        {/* Jeśli chcesz dodać pole loginu po userName, odkomentuj poniższy blok
+        <div className="form-group">
+          <label className="form-label" htmlFor="userName">Username</label>
+          <input
+            type="text"
+            id="userName"
+            name="userName"
+            className={`form-input ${errors.userName ? 'error' : ''}`}
+            value={formData.userName}
+            onChange={handleChange}
+            placeholder="Enter your username"
+            disabled={isLoading}
+          />
+          {errors.userName && <div className="error-message">{errors.userName}</div>}
+        </div>
+        */}
+
         <div className="form-group">
           <label className="form-label" htmlFor="email">Email</label>
           <input
@@ -147,4 +165,4 @@ const Login = () => {
   );
 };
 
-export default Login; 
+export default Login;
