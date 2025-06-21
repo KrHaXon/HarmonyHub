@@ -27,17 +27,22 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-            name = "user_friends",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
+            name = "user_followers",
+            joinColumns = @JoinColumn(name = "following_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
-    private List<User> friends = new ArrayList<>();
+    private List<User> followers = new ArrayList<>();
 
-    public String getUsername() {
+    @ManyToMany(mappedBy = "followers")
+    private List<User> following = new ArrayList<>();
+
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
+    public String getUserName() {
         return userName;
     }
 
-    public void setUsername(String username) {
+    public void setUserName(String username) {
         this.userName = username;
     }
 
@@ -55,5 +60,27 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public List<Playlist> getPlaylists() {
+        return this.playlists;
+    }
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public List<User> getFollowers() {
+        return followers;
+    }
+
+    public List<User> getFollowing() {
+        return following;
     }
 }

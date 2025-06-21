@@ -4,7 +4,7 @@ import '../../styles/auth.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    userName: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -18,7 +18,6 @@ const Register = () => {
       ...prev,
       [name]: value
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -26,11 +25,11 @@ const Register = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
-    if (!formData.username) {
-      newErrors.username = 'Username is required';
-    } else if (formData.username.length < 3) {
-      newErrors.username = 'Username must be at least 3 characters';
+
+    if (!formData.userName) {
+      newErrors.userName = 'Username is required';
+    } else if (formData.userName.length < 3) {
+      newErrors.userName = 'Username must be at least 3 characters';
     }
 
     if (!formData.email) {
@@ -38,7 +37,7 @@ const Register = () => {
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email';
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 8) {
@@ -66,7 +65,7 @@ const Register = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          username: formData.username,
+          userName: formData.userName,
           email: formData.email,
           password: formData.password
         })
@@ -90,20 +89,20 @@ const Register = () => {
     <div className="auth-container">
       <form className="auth-form" onSubmit={handleSubmit}>
         <h1 className="auth-title">Create Account</h1>
-        
+
         <div className="form-group">
-          <label className="form-label" htmlFor="username">Username</label>
+          <label className="form-label" htmlFor="userName">Username</label>
           <input
             type="text"
-            id="username"
-            name="username"
-            className={`form-input ${errors.username ? 'error' : ''}`}
-            value={formData.username}
+            id="userName"
+            name="userName"
+            className={`form-input ${errors.userName ? 'error' : ''}`}
+            value={formData.userName}
             onChange={handleChange}
             placeholder="Choose a username"
             disabled={isLoading}
           />
-          {errors.username && <div className="error-message">{errors.username}</div>}
+          {errors.userName && <div className="error-message">{errors.userName}</div>}
         </div>
 
         <div className="form-group">
@@ -173,4 +172,4 @@ const Register = () => {
   );
 };
 
-export default Register; 
+export default Register;

@@ -71,6 +71,7 @@ function App() {
                 </PageTransition>
               }
             />
+                < model_author
              <Route
               path="/author/:id"
               element={
@@ -79,6 +80,7 @@ function App() {
                 </PageTransition>
               }
             />
+            <Route path="/profile" element={<Profile />} />
 
           </Routes>
         </AnimatePresence>
