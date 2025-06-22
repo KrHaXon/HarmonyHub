@@ -1,0 +1,66 @@
+/* FriendsModal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 800px;
+  position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.friends-search {
+  width: 100%;
+  padding: 8px 12px;
+  margin-bottom: 1rem;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.friends-columns {
+  display: flex;
+  gap: 2rem;
+}
+
+.friends-column {
+  flex: 1;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+}
+
+.friend-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+}

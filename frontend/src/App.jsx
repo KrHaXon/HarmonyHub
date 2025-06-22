@@ -16,6 +16,7 @@ import PlaylistDetails from './sites/PlaylistDetails';
 import { PlayerProvider } from './context/PlayerContext';
 import PlayerBar from './components/PlayerBar';
 import Author from './components/Author/Author';
+import UserProfile from './sites/UserProfile';
 
 function App() {
   const location = useLocation();
@@ -81,7 +82,7 @@ function App() {
               }
             />
             <Route path="/profile" element={<Profile />} />
-
+            <Route path="/user/:id" element={<UserProfile/> } />
           </Routes>
         </AnimatePresence>
         <PlayerBar />

@@ -13,6 +13,7 @@ public class UserDTO {
     private String email;
     private String profileImageUrl;
     private List<PlaylistDTO> playlists;
+    private boolean isFollowed;
 
     // Konstruktor
     public UserDTO(Long id, String userName, String email, String profileImageUrl, List<PlaylistDTO> playlists) {
@@ -74,5 +75,12 @@ public class UserDTO {
 
     public void setFollowingCount(int followingCount) {
         this.followingCount = followingCount;
+    }
+    public boolean getIsFollowed() {
+        return isFollowed;
+    }
+
+    public void setIsFollowed(boolean isFollowed) {
+        this.isFollowed = isFollowed;
     }
 }
