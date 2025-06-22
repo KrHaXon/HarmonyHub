@@ -1,66 +1,158 @@
-/* FriendsModal.css */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(10, 10, 30, 0.75); /* ciemniejsze tło, ale z lekkim fioletem */
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  width: 80%;
-  max-width: 800px;
-  position: relative;
-  max-height: 80vh;
+  background: #1f1a2e; /* ciemne tło modal */
+  padding: 2rem 2.5rem;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 85vh;
   overflow-y: auto;
+  box-shadow: 0 0 20px rgba(106, 13, 173, 0.7);
+  color: #e0d9ff;
+  display: flex;
+  flex-direction: column;
 }
 
 .close-button {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 1.5rem;
+  top: 1.2rem;
+  right: 1.5rem;
+  font-size: 2rem;
   background: none;
   border: none;
+  color: #d1c4e9;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #6a0dad;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #b39ddb;
+  text-align: center;
 }
 
 .friends-search {
   width: 100%;
-  padding: 8px 12px;
-  margin-bottom: 1rem;
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  padding: 10px 15px;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  border: 1.5px solid #6a0dad;
+  background-color: #2e2640;
+  color: #eee;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.friends-search::placeholder {
+  color: #a89ed9;
+}
+
+.friends-search:focus {
+  border-color: #b39ddb;
+  box-shadow: 0 0 8px rgba(106, 13, 173, 0.6);
 }
 
 .friends-columns {
   display: flex;
-  gap: 2rem;
+  gap: 2.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .friends-column {
-  flex: 1;
+  flex: 1 1 45%;
+  background-color: #2e2640;
+  border-radius: 15px;
+  padding: 1rem 1.5rem;
+  box-shadow: inset 0 0 10px #6a0dad44;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.friends-column h3 {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #d1c4e9;
+  margin-bottom: 1rem;
+  text-align: center;
+  border-bottom: 2px solid #6a0dad;
+  padding-bottom: 0.5rem;
 }
 
 .friend-item {
   display: flex;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.8rem;
   cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+  color: #dcd6f7;
+}
+
+.friend-item:hover {
+  background-color: #6a0dad88;
+  color: white;
 }
 
 .friend-item img {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
-  margin-right: 0.75rem;
+  margin-right: 12px;
+  box-shadow: 0 0 5px #6a0dadcc;
+  object-fit: cover;
+  border: 2px solid #b39ddb;
+}
+
+.friend-item span {
+  font-weight: 600;
+  font-size: 1.1rem;
+  user-select: none;
+}
+
+/* Scrollbar dla kolumn */
+.friends-column::-webkit-scrollbar {
+  width: 8px;
+}
+
+.friends-column::-webkit-scrollbar-thumb {
+  background-color: #6a0dadcc;
+  border-radius: 10px;
+}
+
+.friends-column::-webkit-scrollbar-track {
+  background: #1f1a2e;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .friends-columns {
+    flex-direction: column;
+  }
+
+  .friends-column {
+    flex: 1 1 100%;
+    max-height: 300px;
+  }
 }
