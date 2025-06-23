@@ -40,4 +40,9 @@ public class AuthorServiceImpl implements AuthorService {
     public void deleteAuthor(Long id) {
         authorRepository.deleteById(id);
     }
+
+    @Override
+    public List<Author> searchAuthors(String query) {
+        return authorRepository.findByStageNameContainingIgnoreCase(query);
+    }
 }

@@ -77,4 +77,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .build();
     }
 
+    @Override
+    public List<User> searchUsers(String query) {
+        return userRepository.findByUserNameContainingIgnoreCase(query);
+    }
+
 }

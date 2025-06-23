@@ -10,4 +10,6 @@ public interface SongService {
     List<Song> getAllSongs();
     Song updateSong(Long id, Song updatedSong);
     void deleteSong(Long id);
+
+    List<Song> searchSongs(String query);
 } 

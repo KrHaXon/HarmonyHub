@@ -39,4 +39,9 @@ public class SongServiceImpl implements SongService {
     public void deleteSong(Long id) {
         songRepository.deleteById(id);
     }
+
+    @Override
+    public List<Song> searchSongs(String query) {
+        return songRepository.findByTitleContainingIgnoreCaseOrAuthor_StageNameContainingIgnoreCase(query, query);
+    }
 } 
