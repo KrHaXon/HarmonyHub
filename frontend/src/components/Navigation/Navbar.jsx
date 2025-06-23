@@ -55,26 +55,32 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setLoadingUsers(true);
-        const token = localStorage.getItem('token');
-        const response = await fetch("http://localhost:8080/api/users", {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        if (!response.ok) throw new Error("Błąd pobierania użytkowników");
-        const data = await response.json();
-        setUsers(data);
-      } catch (err) {
-        setErrorUsers(err.message);
-      } finally {
-        setLoadingUsers(false);
-      }
-    };
-    fetchUsers();
-  }, []);
+  const fetchUsers = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setLoadingUsers(false);
+      return; 
+    }
+
+    try {
+      setLoadingUsers(true);
+      const response = await fetch("http://localhost:8080/api/users", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if (!response.ok) throw new Error("Błąd pobierania użytkowników");
+      const data = await response.json();
+      setUsers(data);
+    } catch (err) {
+      setErrorUsers(err.message);
+    } finally {
+      setLoadingUsers(false);
+    }
+  };
+
+  fetchUsers();
+}, []);
 
     const filteredAuthors = authors.filter((author) =>
     (author.stageName || '').toLowerCase().includes(searchQuery.toLowerCase())
