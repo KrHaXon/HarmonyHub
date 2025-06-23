@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
+import CreatePlaylistModal from '../Modals/CreatePlaylistModal';
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -19,6 +20,8 @@ const Navbar = () => {
   const [errorSongs, setErrorSongs] = useState(null);
   const [errorAuthors, setErrorAuthors] = useState(null);
   const [errorUsers, setErrorUsers] = useState(null);
+
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   useEffect(() => {
     const fetchSongs = async () => {
@@ -237,12 +240,17 @@ const Navbar = () => {
             </>
           ) : (
             <>
+              <button className="button create-button" onClick={() => setShowCreateModal(true)}>Create Playlist</button>
               <Link to="/profile" className="button profile-button">My Profile</Link>
               <button className="button logout-button" onClick={handleLogout}>Logout</button>
             </>
           )}
         </div>
       </div>
+
+      {showCreateModal && (
+        <CreatePlaylistModal onClose={() => setShowCreateModal(false)} />
+      )}
     </nav>
   );
 };

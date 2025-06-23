@@ -39,9 +39,20 @@ export const PlayerProvider = ({ children }) => {
 
   const currentSong = queue[currentIndex] || null;
 
+  const reorderQueue = (newOrder) => {
+    if (queue.length === 0 || currentIndex === -1) {
+      setQueue(newOrder);
+      return;
+    }
+    const currentSongId = queue[currentIndex]?.id;
+    const newIdx = newOrder.findIndex(song => song.id === currentSongId);
+    setQueue(newOrder);
+    setCurrentIndex(newIdx !== -1 ? newIdx : 0);
+  };
+
   return (
     <PlayerContext.Provider value={{
-      queue, currentSong, isPlaying, playQueue, nextSong, prevSong, pause, resume, progress, setProgress, audioRef, currentIndex
+      queue, currentSong, isPlaying, playQueue, nextSong, prevSong, pause, resume, progress, setProgress, audioRef, currentIndex, reorderQueue
     }}>
       {children}
     </PlayerContext.Provider>
