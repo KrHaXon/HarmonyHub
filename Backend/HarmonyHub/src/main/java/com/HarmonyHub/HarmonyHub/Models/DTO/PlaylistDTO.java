@@ -3,6 +3,7 @@ package com.HarmonyHub.HarmonyHub.Models.DTO;
 import com.HarmonyHub.HarmonyHub.Models.Playlist;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlaylistDTO {
     private Long id;
@@ -18,7 +19,17 @@ public class PlaylistDTO {
         this.coverImage = coverImage;
         this.songs = songs;
     }
-
+    public PlaylistDTO(Playlist playlist) {
+        this.id = playlist.getId();
+        this.title = playlist.getTitle();
+        this.description = playlist.getDescription();
+        this.coverImage = playlist.getCoverImage();
+        this.songs = playlist.getSongs() != null
+                ? playlist.getSongs().stream()
+                .map(SongDTO::new)
+                .collect(Collectors.toList())
+                : null;
+    }
     public Long getId() {
         return id;
     }

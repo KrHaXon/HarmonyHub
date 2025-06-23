@@ -32,7 +32,6 @@ public class JwtService {
                 .compact();
     }
 
-    // ✅ TO CIĘ INTERESUJE:
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }

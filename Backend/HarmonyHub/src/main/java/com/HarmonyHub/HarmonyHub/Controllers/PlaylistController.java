@@ -1,5 +1,6 @@
 package com.HarmonyHub.HarmonyHub.Controllers;
 
+import com.HarmonyHub.HarmonyHub.Models.DTO.PlaylistDTO;
 import com.HarmonyHub.HarmonyHub.Models.Playlist;
 import com.HarmonyHub.HarmonyHub.Services.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/playlists")
@@ -15,8 +17,10 @@ public class PlaylistController {
     private PlaylistService playlistService;
 
     @GetMapping
-    public List<Playlist> getAllPlaylists() {
-        return playlistService.getAllPlaylists();
+    public List<PlaylistDTO> getAllPlaylists() {
+        return playlistService.getAllPlaylists().stream()
+                .map(PlaylistDTO::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
