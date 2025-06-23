@@ -110,18 +110,7 @@ useEffect(() => {
             </svg>
           </button>
 
-          {(loadingSongs || loadingAuthors || loadingUsers) && (
-            <div className="search-results" style={{ color: "var(--color-text-primary)", padding: 12 }}>
-              Loading...
-            </div>
-          )}
-
-          {(errorSongs || errorAuthors || errorUsers) && (
-            <div className="search-results" style={{ color: "red", padding: 12 }}>
-              Error: {errorSongs || errorAuthors || errorUsers}
-            </div>
-          )}
-
+        
           {!loadingSongs && !loadingAuthors && !loadingUsers &&
             !errorSongs && !errorAuthors && !errorUsers && searchQuery && (
               <div className="search-results" role="list">
@@ -196,9 +185,7 @@ useEffect(() => {
                 )}
 
                 {/* Brak wyników */}
-                {songs.length === 0 && authors.length === 0 && users.length === 0 && (
-                  <div style={{ padding: 12, color: "var(--color-text-secondary)" }}>No results found.</div>
-                )}
+               
               </div>
           )}
         </div>
