@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import CreatePlaylistModal from '../Modals/CreatePlaylistModal';
+import { usePlayer } from '../../context/PlayerContext';
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -20,58 +22,57 @@ const Navbar = () => {
   const [errorSongs, setErrorSongs] = useState(null);
   const [errorAuthors, setErrorAuthors] = useState(null);
   const [errorUsers, setErrorUsers] = useState(null);
-useEffect(() => {
-  if (searchQuery.trim() === '') {
-    setSongs([]);
-    setAuthors([]);
-    setUsers([]);
-    return;
-  }
 
+  const { playQueue } = usePlayer();
 
-  const controller = new AbortController();
-
-
-  const fetchSearchResults = async () => {
-    try {
-      setLoadingSongs(true);
-      setLoadingAuthors(true);
-      setLoadingUsers(true);
-
-      const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:8080/api/search?query=${encodeURIComponent(searchQuery)}`, {
-        signal: controller.signal,
-        headers: {
-          Authorization: token ? `Bearer ${token}` : undefined
-        }
-      });
-
-      if (!res.ok) throw new Error("Błąd wyszukiwania");
-      const data = await res.json();
-      setSongs(data.songs || []);
-      setAuthors(data.authors || []);
-      setUsers(data.users || []);
-      setErrorSongs(null);
-      setErrorAuthors(null);
-      setErrorUsers(null);
-    } catch (err) {
-      if (err.name !== 'AbortError') {
-        setErrorSongs(err.message);
-        setErrorAuthors(err.message);
-        setErrorUsers(err.message);
-      }
-    } finally {
-      setLoadingSongs(false);
-      setLoadingAuthors(false);
-      setLoadingUsers(false);
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setSongs([]);
+      setAuthors([]);
+      setUsers([]);
+      return;
     }
-  };
 
-  fetchSearchResults();
-  return () => controller.abort();
-}, [searchQuery]);
+    const controller = new AbortController();
 
-   
+    const fetchSearchResults = async () => {
+      try {
+        setLoadingSongs(true);
+        setLoadingAuthors(true);
+        setLoadingUsers(true);
+
+        const token = localStorage.getItem('token');
+        const res = await fetch(`http://localhost:8080/api/search?query=${encodeURIComponent(searchQuery)}`, {
+          signal: controller.signal,
+          headers: {
+            Authorization: token ? `Bearer ${token}` : undefined
+          }
+        });
+
+        if (!res.ok) throw new Error("Błąd wyszukiwania");
+        const data = await res.json();
+        setSongs(data.songs || []);
+        setAuthors(data.authors || []);
+        setUsers(data.users || []);
+        setErrorSongs(null);
+        setErrorAuthors(null);
+        setErrorUsers(null);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          setErrorSongs(err.message);
+          setErrorAuthors(err.message);
+          setErrorUsers(err.message);
+        }
+      } finally {
+        setLoadingSongs(false);
+        setLoadingAuthors(false);
+        setLoadingUsers(false);
+      }
+    };
+
+    fetchSearchResults();
+    return () => controller.abort();
+  }, [searchQuery]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -113,7 +114,6 @@ useEffect(() => {
             </svg>
           </button>
 
-        
           {!loadingSongs && !loadingAuthors && !loadingUsers &&
             !errorSongs && !errorAuthors && !errorUsers && searchQuery && (
               <div className="search-results" role="list">
@@ -175,8 +175,13 @@ useEffect(() => {
                     <div style={{ padding: "4px 16px", fontWeight: "700", color: "var(--color-text-secondary)" }}>
                       Songs
                     </div>
-                    {songs.map((song) => (
-                      <div key={"song-" + song.id} className="search-result-item" role="listitem" tabIndex={0}>
+                    {songs.map((song, idx) => (
+                      <div key={"song-" + song.id} className="search-result-item" role="listitem" tabIndex={0}
+                        onClick={() => {
+                          playQueue(songs, idx);
+                          setSearchQuery('');
+                        }}
+                      >
                         {song.cover && <img src={song.cover} alt={song.title} />}
                         <div className="search-result-info">
                           <div className="search-result-title">{song.title}</div>
