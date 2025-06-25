@@ -20,84 +20,58 @@ const Navbar = () => {
   const [errorSongs, setErrorSongs] = useState(null);
   const [errorAuthors, setErrorAuthors] = useState(null);
   const [errorUsers, setErrorUsers] = useState(null);
+useEffect(() => {
+  if (searchQuery.trim() === '') {
+    setSongs([]);
+    setAuthors([]);
+    setUsers([]);
+    return;
+  }
 
-  const [showCreateModal, setShowCreateModal] = useState(false);
 
-  useEffect(() => {
-    const fetchSongs = async () => {
-      try {
-        setLoadingSongs(true);
-        const response = await fetch("http://localhost:8080/api/songs");
-        if (!response.ok) throw new Error("Błąd pobierania piosenek");
-        const data = await response.json();
-        setSongs(data);
-      } catch (err) {
-        setErrorSongs(err.message);
-      } finally {
-        setLoadingSongs(false);
-      }
-    };
-    fetchSongs();
-  }, []);
+  const controller = new AbortController();
 
-  useEffect(() => {
-    const fetchAuthors = async () => {
-      try {
-        setLoadingAuthors(true);
-        const response = await fetch("http://localhost:8080/api/authors");
-        if (!response.ok) throw new Error("Błąd pobierania autorów");
-        const data = await response.json();
-        setAuthors(data);
-      } catch (err) {
-        setErrorAuthors(err.message);
-      } finally {
-        setLoadingAuthors(false);
-      }
-    };
-    fetchAuthors();
-  }, []);
 
-  useEffect(() => {
-  const fetchUsers = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setLoadingUsers(false);
-      return; 
-    }
-
+  const fetchSearchResults = async () => {
     try {
+      setLoadingSongs(true);
+      setLoadingAuthors(true);
       setLoadingUsers(true);
-      const response = await fetch("http://localhost:8080/api/users", {
+
+      const token = localStorage.getItem('token');
+      const res = await fetch(`http://localhost:8080/api/search?query=${encodeURIComponent(searchQuery)}`, {
+        signal: controller.signal,
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: token ? `Bearer ${token}` : undefined
         }
       });
-      if (!response.ok) throw new Error("Błąd pobierania użytkowników");
-      const data = await response.json();
-      setUsers(data);
+
+      if (!res.ok) throw new Error("Błąd wyszukiwania");
+      const data = await res.json();
+      setSongs(data.songs || []);
+      setAuthors(data.authors || []);
+      setUsers(data.users || []);
+      setErrorSongs(null);
+      setErrorAuthors(null);
+      setErrorUsers(null);
     } catch (err) {
-      setErrorUsers(err.message);
+      if (err.name !== 'AbortError') {
+        setErrorSongs(err.message);
+        setErrorAuthors(err.message);
+        setErrorUsers(err.message);
+      }
     } finally {
+      setLoadingSongs(false);
+      setLoadingAuthors(false);
       setLoadingUsers(false);
     }
   };
 
-  fetchUsers();
-}, []);
+  fetchSearchResults();
+  return () => controller.abort();
+}, [searchQuery]);
 
-    const filteredAuthors = authors.filter((author) =>
-    (author.stageName || '').toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const filteredSongs = songs.filter(
-    (song) =>
-      (song.title || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (song.author?.stageName || '').toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-    const filteredUsers = users.filter((user) =>
-    (user.userName || '').toLowerCase().includes(searchQuery.toLowerCase())
-  );
+   
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -139,28 +113,17 @@ const Navbar = () => {
             </svg>
           </button>
 
-          {(loadingSongs || loadingAuthors || loadingUsers) && (
-            <div className="search-results" style={{ color: "var(--color-text-primary)", padding: 12 }}>
-              Loading...
-            </div>
-          )}
-
-          {(errorSongs || errorAuthors || errorUsers) && (
-            <div className="search-results" style={{ color: "red", padding: 12 }}>
-              Error: {errorSongs || errorAuthors || errorUsers}
-            </div>
-          )}
-
+        
           {!loadingSongs && !loadingAuthors && !loadingUsers &&
             !errorSongs && !errorAuthors && !errorUsers && searchQuery && (
               <div className="search-results" role="list">
                 {/* Users */}
-                {filteredUsers.length > 0 && (
+                {users.length > 0 && (
                   <>
                     <div style={{ padding: "4px 16px", fontWeight: "700", color: "var(--color-text-secondary)", marginTop: 8 }}>
                       Users
                     </div>
-                    {filteredUsers.map((user) => (
+                    {users.map((user) => (
                       <div
                         key={"user-" + user.id}
                         className="search-result-item"
@@ -181,12 +144,12 @@ const Navbar = () => {
                 )}
 
                 {/* Authors */}
-                {filteredAuthors.length > 0 && (
+                {authors.length > 0 && (
                   <>
                     <div style={{ padding: "4px 16px", fontWeight: "700", color: "var(--color-text-secondary)", marginTop: 8 }}>
                       Authors
                     </div>
-                    {filteredAuthors.map((author) => (
+                    {authors.map((author) => (
                       <div
                         key={"author-" + author.id}
                         className="search-result-item"
@@ -207,12 +170,12 @@ const Navbar = () => {
                 )}
 
                 {/* Songs */}
-                {filteredSongs.length > 0 && (
+                {songs.length > 0 && (
                   <>
                     <div style={{ padding: "4px 16px", fontWeight: "700", color: "var(--color-text-secondary)" }}>
                       Songs
                     </div>
-                    {filteredSongs.map((song) => (
+                    {songs.map((song) => (
                       <div key={"song-" + song.id} className="search-result-item" role="listitem" tabIndex={0}>
                         {song.cover && <img src={song.cover} alt={song.title} />}
                         <div className="search-result-info">
@@ -225,9 +188,7 @@ const Navbar = () => {
                 )}
 
                 {/* Brak wyników */}
-                {filteredSongs.length === 0 && filteredAuthors.length === 0 && filteredUsers.length === 0 && (
-                  <div style={{ padding: 12, color: "var(--color-text-secondary)" }}>No results found.</div>
-                )}
+               
               </div>
           )}
         </div>
