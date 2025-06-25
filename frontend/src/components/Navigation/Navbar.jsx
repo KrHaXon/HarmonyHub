@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
+import CreatePlaylistModal from '../Modals/CreatePlaylistModal';
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -27,7 +28,9 @@ useEffect(() => {
     return;
   }
 
+
   const controller = new AbortController();
+
 
   const fetchSearchResults = async () => {
     try {
@@ -198,12 +201,17 @@ useEffect(() => {
             </>
           ) : (
             <>
+              <button className="button create-button" onClick={() => setShowCreateModal(true)}>Create Playlist</button>
               <Link to="/profile" className="button profile-button">My Profile</Link>
               <button className="button logout-button" onClick={handleLogout}>Logout</button>
             </>
           )}
         </div>
       </div>
+
+      {showCreateModal && (
+        <CreatePlaylistModal onClose={() => setShowCreateModal(false)} />
+      )}
     </nav>
   );
 };

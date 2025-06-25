@@ -6,6 +6,7 @@ import com.HarmonyHub.HarmonyHub.Models.DTO.UserDTO;
 import com.HarmonyHub.HarmonyHub.Models.User;
 import com.HarmonyHub.HarmonyHub.Repository.UserRepository;
 import com.HarmonyHub.HarmonyHub.Services.IMPL.JwtService;
+import com.HarmonyHub.HarmonyHub.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,8 @@ import java.util.Optional;
 public class AuthController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -36,7 +39,7 @@ public class AuthController {
             return "Email already in use";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        userService.createUser(user);
         return "Registration successful";
     }
 
