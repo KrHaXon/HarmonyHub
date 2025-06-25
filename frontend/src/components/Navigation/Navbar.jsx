@@ -42,18 +42,27 @@ const Navbar = () => {
         setLoadingUsers(true);
 
         const token = localStorage.getItem('token');
-        const res = await fetch(`http://localhost:8080/api/search?query=${encodeURIComponent(searchQuery)}`, {
-          signal: controller.signal,
-          headers: {
-            Authorization: token ? `Bearer ${token}` : undefined
+        const headers = {};
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        const res = await fetch(
+          `http://localhost:8080/api/search?query=${encodeURIComponent(searchQuery)}`,
+          {
+            signal: controller.signal,
+            headers,
           }
-        });
+        );
 
         if (!res.ok) throw new Error("Błąd wyszukiwania");
+
         const data = await res.json();
+
         setSongs(data.songs || []);
         setAuthors(data.authors || []);
         setUsers(data.users || []);
+
         setErrorSongs(null);
         setErrorAuthors(null);
         setErrorUsers(null);
@@ -71,6 +80,7 @@ const Navbar = () => {
     };
 
     fetchSearchResults();
+
     return () => controller.abort();
   }, [searchQuery]);
 
@@ -95,9 +105,15 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-menu">
-          <Link to="/" className={`menu-item ${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
-          <Link to="/browse" className={`menu-item ${location.pathname === '/browse' ? 'active' : ''}`}>Browse</Link>
-          <Link to="/library" className={`menu-item ${location.pathname === '/library' ? 'active' : ''}`}>Library</Link>
+          <Link to="/" className={`menu-item ${location.pathname === '/' ? 'active' : ''}`}>
+            Home
+          </Link>
+          <Link to="/browse" className={`menu-item ${location.pathname === '/browse' ? 'active' : ''}`}>
+            Browse
+          </Link>
+          <Link to="/library" className={`menu-item ${location.pathname === '/library' ? 'active' : ''}`}>
+            Library
+          </Link>
         </div>
 
         <div className="navbar-search" style={{ position: "relative", flex: "0 1 400px" }}>
@@ -109,7 +125,12 @@ const Navbar = () => {
             className="navbar-search-input"
           />
           <button className="search-button" aria-label="Search">
-            <svg viewBox="0 0 24 24" width="24" height="24" style={{ fill: "var(--color-text-secondary)" }}>
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              style={{ fill: "var(--color-text-secondary)" }}
+            >
               <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z" />
             </svg>
           </button>
@@ -120,7 +141,14 @@ const Navbar = () => {
                 {/* Users */}
                 {users.length > 0 && (
                   <>
-                    <div style={{ padding: "4px 16px", fontWeight: "700", color: "var(--color-text-secondary)", marginTop: 8 }}>
+                    <div
+                      style={{
+                        padding: "4px 16px",
+                        fontWeight: "700",
+                        color: "var(--color-text-secondary)",
+                        marginTop: 8,
+                      }}
+                    >
                       Users
                     </div>
                     {users.map((user) => (
@@ -134,7 +162,9 @@ const Navbar = () => {
                           navigate(`/user/${user.id}`);
                         }}
                       >
-                        {user.profileImageUrl && <img src={user.profileImageUrl} alt={user.userName} />}
+                        {user.profileImageUrl && (
+                          <img src={user.profileImageUrl} alt={user.userName} />
+                        )}
                         <div className="search-result-info">
                           <div className="search-result-title">{user.userName}</div>
                         </div>
@@ -146,7 +176,14 @@ const Navbar = () => {
                 {/* Authors */}
                 {authors.length > 0 && (
                   <>
-                    <div style={{ padding: "4px 16px", fontWeight: "700", color: "var(--color-text-secondary)", marginTop: 8 }}>
+                    <div
+                      style={{
+                        padding: "4px 16px",
+                        fontWeight: "700",
+                        color: "var(--color-text-secondary)",
+                        marginTop: 8,
+                      }}
+                    >
                       Authors
                     </div>
                     {authors.map((author) => (
@@ -160,7 +197,9 @@ const Navbar = () => {
                           navigate(`/author/${author.id}`);
                         }}
                       >
-                        {author.profileImageUrl && <img src={author.profileImageUrl} alt={author.stageName} />}
+                        {author.profileImageUrl && (
+                          <img src={author.profileImageUrl} alt={author.stageName} />
+                        )}
                         <div className="search-result-info">
                           <div className="search-result-title">{author.stageName}</div>
                         </div>
@@ -172,11 +211,21 @@ const Navbar = () => {
                 {/* Songs */}
                 {songs.length > 0 && (
                   <>
-                    <div style={{ padding: "4px 16px", fontWeight: "700", color: "var(--color-text-secondary)" }}>
+                    <div
+                      style={{
+                        padding: "4px 16px",
+                        fontWeight: "700",
+                        color: "var(--color-text-secondary)",
+                      }}
+                    >
                       Songs
                     </div>
                     {songs.map((song, idx) => (
-                      <div key={"song-" + song.id} className="search-result-item" role="listitem" tabIndex={0}
+                      <div
+                        key={"song-" + song.id}
+                        className="search-result-item"
+                        role="listitem"
+                        tabIndex={0}
                         onClick={() => {
                           playQueue(songs, idx);
                           setSearchQuery('');
@@ -191,11 +240,8 @@ const Navbar = () => {
                     ))}
                   </>
                 )}
-
-                {/* Brak wyników */}
-               
               </div>
-          )}
+            )}
         </div>
 
         <div className="navbar-auth">
@@ -206,17 +252,22 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <button className="button create-button" onClick={() => setShowCreateModal(true)}>Create Playlist</button>
+              <button
+                className="button create-button"
+                onClick={() => setShowCreateModal(true)}
+              >
+                Create Playlist
+              </button>
               <Link to="/profile" className="button profile-button">My Profile</Link>
-              <button className="button logout-button" onClick={handleLogout}>Logout</button>
+              <button className="button logout-button" onClick={handleLogout}>
+                Logout
+              </button>
             </>
           )}
         </div>
       </div>
 
-      {showCreateModal && (
-        <CreatePlaylistModal onClose={() => setShowCreateModal(false)} />
-      )}
+      {showCreateModal && <CreatePlaylistModal onClose={() => setShowCreateModal(false)} />}
     </nav>
   );
 };

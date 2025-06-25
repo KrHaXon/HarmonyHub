@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Optional<User> getUserByUsername(String username) {
-        return userRepository.findByuserName(username);
+        return userRepository.findByUserName(username);
     }
 
     @Override

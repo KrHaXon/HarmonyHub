@@ -42,6 +42,6 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public List<Song> searchSongs(String query) {
-        return songRepository.findByTitleContainingIgnoreCaseOrAuthor_StageNameContainingIgnoreCase(query, query);
+        return songRepository.findByTitleContainingIgnoreCase(query);
     }
 } 
