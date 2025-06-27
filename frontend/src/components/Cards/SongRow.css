@@ -78,4 +78,74 @@
 .icon-button:hover, .icon-button.active {
   background: rgba(147, 112, 219, 0.13);
   color: var(--color-accent);
+}
+
+.song-more-menu {
+  position: absolute;
+  top: 32px;
+  right: 0;
+  min-width: 180px;
+  background: #23213a;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.25);
+  z-index: 10;
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInMenu 0.18s ease;
+}
+
+@keyframes fadeInMenu {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.song-more-menu-item {
+  background: none;
+  border: none;
+  color: #b9aaff;
+  font-weight: 500;
+  text-align: left;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 1rem;
+}
+.song-more-menu-item:hover {
+  background: #2d2950;
+  color: #fff;
+}
+
+.song-playlists-dropdown {
+  background: #23213a;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px 0 rgba(31, 38, 135, 0.18);
+  margin-top: 4px;
+  padding: 6px 0;
+  min-width: 180px;
+  max-height: 220px;
+  overflow-y: auto;
+  animation: fadeInMenu 0.18s ease;
+}
+
+.song-playlists-item {
+  padding: 9px 18px;
+  color: #b9aaff;
+  cursor: pointer;
+  font-size: 0.98rem;
+  transition: background 0.15s, color 0.15s;
+  border: none;
+  background: none;
+  text-align: left;
+}
+.song-playlists-item:hover {
+  background: #2d2950;
+  color: #fff;
+}
+
+.song-playlists-empty {
+  color: #aaa;
+  padding: 10px 18px;
+  font-size: 0.97rem;
+  text-align: center;
 } 

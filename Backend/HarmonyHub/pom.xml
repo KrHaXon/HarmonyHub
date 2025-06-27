@@ -89,7 +89,11 @@
 			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<!-- EMAIL -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 		<!-- TESTY -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

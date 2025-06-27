@@ -136,10 +136,14 @@ const Login = () => {
               onChange={handleChange}
               disabled={isLoading}
             />
-            <label className="checkbox-label" htmlFor="rememberMe">Remember me</label>
-            <Link to="/forgot-password" className="auth-link forgot-password">
-              Forgot Password?
-            </Link>
+            <div className="remember-me">
+              <label className="checkbox-label" htmlFor="rememberMe">Remember me </label>
+            </div>
+            <div className="forgot-password-link">
+              <Link to="/forgot-password" className="auth-link forgot-password">
+                Forgot Password?
+              </Link>
+            </div>
           </div>
         </div>
 

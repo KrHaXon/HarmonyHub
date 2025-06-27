@@ -13,6 +13,7 @@ public class UserDTO {
     private String email;
     private String profileImageUrl;
     private List<PlaylistDTO> playlists;
+    private boolean isFollowed;
 
     // Konstruktor
     public UserDTO(Long id, String userName, String email, String profileImageUrl, List<PlaylistDTO> playlists) {
@@ -22,7 +23,15 @@ public class UserDTO {
         this.profileImageUrl = profileImageUrl;
         this.playlists = playlists;
     }
+    public UserDTO(User user) {
+        if (user == null) return;
+        this.id = user.getId();
+        this.userName = user.getUserName();
+        this.email = user.getEmail();
+        this.profileImageUrl = user.getProfileImageUrl();
+        this.playlists = convertToPlaylistDTOs(user.getPlaylists());
 
+    }
     public UserDTO() {
         // domyślny konstruktor
     }
@@ -43,12 +52,15 @@ public class UserDTO {
         return user;
     }
     public static List<PlaylistDTO> convertToPlaylistDTOs(List<Playlist> playlists) {
+        if (playlists == null) {
+            return List.of();
+        }
+
         return playlists.stream()
                 .map(playlist -> {
-                    // Konwersja listy Song -> List<SongDTO>
-                    List<SongDTO> songDTOs = playlist.getSongs().stream()
-                            .map(song -> new SongDTO(song))
-                            .collect(Collectors.toList());
+                    List<SongDTO> songDTOs = playlist.getSongs() != null
+                            ? playlist.getSongs().stream().map(SongDTO::new).collect(Collectors.toList())
+                            : List.of();
 
                     return new PlaylistDTO(
                             playlist.getId(),
@@ -74,5 +86,12 @@ public class UserDTO {
 
     public void setFollowingCount(int followingCount) {
         this.followingCount = followingCount;
+    }
+    public boolean getIsFollowed() {
+        return isFollowed;
+    }
+
+    public void setIsFollowed(boolean isFollowed) {
+        this.isFollowed = isFollowed;
     }
 }

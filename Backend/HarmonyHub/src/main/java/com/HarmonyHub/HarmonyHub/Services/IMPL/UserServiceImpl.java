@@ -2,6 +2,7 @@ package com.HarmonyHub.HarmonyHub.Services.IMPL;
 
 import com.HarmonyHub.HarmonyHub.Models.User;
 import com.HarmonyHub.HarmonyHub.Repository.UserRepository;
+import com.HarmonyHub.HarmonyHub.Services.EmailService;
 import com.HarmonyHub.HarmonyHub.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,15 +16,20 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, EmailService emailService) {
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     @Override
     public User createUser(User user) {
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        emailService.sendEmail(savedUser.getEmail(), "Witaj w HarmonyHub!", "Cześć! Dziękujemy za rejestrację w HarmonyHub. Ciesz się muzyką i dziel się nią z przyjaciółmi!");
+
+        return savedUser;
     }
 
     @Override
@@ -33,7 +39,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Optional<User> getUserByUsername(String username) {
-        return userRepository.findByuserName(username);
+        return userRepository.findByUserName(username);
     }
 
     @Override
@@ -75,6 +81,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .password(user.getPassword())
                 .authorities("USER") // albo user.getRoles() jeśli masz role
                 .build();
+    }
+
+    @Override
+    public List<User> searchUsers(String query) {
+        return userRepository.findByUserNameContainingIgnoreCase(query);
     }
 
 }

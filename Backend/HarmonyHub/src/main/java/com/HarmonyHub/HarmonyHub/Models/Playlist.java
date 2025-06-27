@@ -31,6 +31,7 @@ public class Playlist {
             joinColumns = @JoinColumn(name = "playlist_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id")
     )
+    @OrderColumn(name = "song_order")
     private List<Song> songs = new ArrayList<>();
 
     @ManyToOne

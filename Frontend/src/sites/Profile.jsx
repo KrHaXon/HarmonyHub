@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './Profile.css';
 import PlaylistCard from '../components/Cards/PlaylistCard';
+import FriendsModal from '../components/Modals/FriendsModal';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const token = localStorage.getItem('token');
+  const [showFriendsModal, setShowFriendsModal] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:8080/api/auth/me', {
@@ -36,7 +38,6 @@ const Profile = () => {
           userName: user.userName,
           email: user.email,
           profileImageUrl: user.profileImageUrl
-          // Password tylko jeśli wymagane
         })
       });
 
@@ -112,7 +113,7 @@ const Profile = () => {
         <button className="profile-button" onClick={() => setIsEditing(true)}>
           Edit profile
         </button>
-        <button className="profile-button">
+        <button className="profile-button" onClick={() => setShowFriendsModal(true)}>
           Friends
         </button>
       </div>
@@ -127,6 +128,9 @@ const Profile = () => {
           <p>Brak playlist</p>
         )}
       </div>
+            {showFriendsModal && (
+        <FriendsModal onClose={() => setShowFriendsModal(false)} token={token} />
+      )}
     </div>
   );
 };

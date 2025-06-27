@@ -3,6 +3,7 @@
   padding-bottom: var(--spacing-xl);
   margin-top: 80px;
   margin-bottom: 100px;
+  width: 70%;
 }
 .playlist-header {
   display: flex;
